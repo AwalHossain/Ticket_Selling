@@ -13,13 +13,20 @@ datasource db {
 
 // ticket selling system for a concert, movie, sports event, etc.   
 
-model customer {
-  customerId       String    @id @default(uuid())
+model user {
+  userId           String    @id @default(uuid())
   name             String
   email            String    @unique
+  role             String    @default("customer")
   password         String
   confirmationCode String?
   confirmed        Boolean?  @default(false)
   confirmedAt      DateTime?
   createdAt        DateTime  @default(now())
+}
+
+enum userRole {
+  customer
+  admin
+  super_admin
 }
