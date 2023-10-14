@@ -13,7 +13,7 @@ datasource db {
 
 // ticket selling system for a concert, movie, sports event, etc.   
 
-model user {
+model User {
   userId           String    @id @default(uuid())
   name             String
   email            String    @unique
@@ -23,10 +23,116 @@ model user {
   confirmed        Boolean?  @default(false)
   confirmedAt      DateTime?
   createdAt        DateTime  @default(now())
+
+  @@map("users")
 }
 
 enum userRole {
   customer
   admin
   super_admin
+}
+
+model Category {
+  categoryId   String        @id @default(uuid())
+  categoryName EventCategory
+  createdAt    DateTime      @default(now())
+
+  @@map("categories")
+}
+
+model City {
+  cityId    String   @id @default(uuid())
+  cityName  Cities
+  createdAt DateTime @default(now())
+  Venues    Venue[]
+
+  @@map("cities")
+}
+
+model Venue {
+  venueId          String  @id @default(uuid())
+  venueName        String
+  venueImageURL    String?
+  venueAddress     String?
+  venueCapacity    Int?
+  venueDescription String?
+
+  cityId    String
+  city      City     @relation(fields: [cityId], references: [cityId])
+  createdAt DateTime @default(now())
+
+  @@map("venues")
+}
+
+enum EventCategory {
+  Concerts
+  Cricket
+  Football
+  Movies
+  Theatre
+  Comedy
+  Family
+  Festivals
+  Fighting
+  Kabaddi
+}
+
+// banglades cities
+enum Cities {
+  Dhaka
+  Chittagong
+  Rajshahi
+  Khulna
+  Sylhet
+  Barisal
+  Rangpur
+  Mymensingh
+  Jashore
+  Comilla
+  Narayanganj
+  Gazipur
+  Bogra
+  Kushtia
+  CoxsBazar
+  Dinajpur
+  Tangail
+  Faridpur
+  Jamalpur
+  Pabna
+  Jessore
+  Noakhali
+  Satkhira
+  Rangamati
+  Narsingdi
+  Sirajganj
+  Nawabganj
+  Narail
+  Pirojpur
+  Magura
+  Habiganj
+  Brahmanbaria
+  Joypurhat
+  Chuadanga
+  Chandpur
+  Meherpur
+  Chapainawabganj
+  Feni
+  Shariatpur
+  Sherpur
+  Lalmonirhat
+  Kurigram
+  Gaibandha
+  Bagerhat
+  Thakurgaon
+  Patuakhali
+  Nilphamari
+  Netrakona
+  Madaripur
+  Lakshmipur
+  Kishoreganj
+  Jhenaidah
+  Gopalganj
+  Sunamganj
+  Panchagarh
 }
