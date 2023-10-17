@@ -19,6 +19,7 @@ model User {
   email            String    @unique
   role             String    @default("customer")
   password         String
+  imageURL         String?
   confirmationCode String?
   confirmed        Boolean?  @default(false)
   confirmedAt      DateTime?
